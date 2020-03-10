@@ -1,4 +1,4 @@
-# Native JavaScript Games
+# Vanilla JavaScript Games
 
 1. Interactive shooting range game with vanilla JavaScript.
 
