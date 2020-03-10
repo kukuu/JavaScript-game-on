@@ -1,0 +1,9 @@
+
+const assert = require('chai').assert;
+const appsut = require('../appsut');
+
+describe('', () => {
+	it('appsut', () => {
+		assert.equal(appsut(), "Hello");
+	});
+});
