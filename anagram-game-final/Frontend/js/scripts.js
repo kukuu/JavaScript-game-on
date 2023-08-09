@@ -14,6 +14,7 @@ async function submitWord() {
   var word = document.getElementById("UserInput").value.toLowerCase();
   var baseString = document.getElementById("BaseString").value;
 
+  //API call to backend for payload
   const response = await fetch("http://localhost:3000/hello");
   const data = await response.json();
   const validWords = new Set(data.validWords);
@@ -23,6 +24,7 @@ async function submitWord() {
     return;
   }
 
+  // Calculate the score for successfully generated word
   var score = calculateScore(word);
   addHighScore(word, score, 0); // Add the new score at the top of the table
   // usedLetters += word;
@@ -34,10 +36,12 @@ function isValidWord(word, baseString, validWordsSet) {
     return false;
   }
 
-  // Check if the word can be formed using the remaining available letters
+  // Hydration: Check if the word can be formed using the remaining available letters as used letters cannot be repeated
+  //Available letters become a resource  base container for subsequent words that can be formed
   var availableLetters = baseString;
   var usedLetters = updateUsedLettersFromTable();
 
+  //We check for used letters and slice them away allowing  for what becomes the new source of available letters.
   for (var i = 0; i < usedLetters.length; i++) {
     var letter = usedLetters[i];
     var index = availableLetters.indexOf(letter);
@@ -47,6 +51,7 @@ function isValidWord(word, baseString, validWordsSet) {
     }
   }
 
+  //Check for any used letters in the new list
   for (var i = 0; i < word.length; i++) {
     var index = availableLetters.indexOf(word[i]);
     if (index === -1) {
@@ -91,7 +96,7 @@ function addHighScore(word, score) {
 }
 
 
-
+// Payload response from server
 function getGreetingFromServer() {
   fetch("http://localhost:3000/hello")
     .then(function (response) {
